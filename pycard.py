@@ -23,7 +23,7 @@ class enterprise:
     for item in listdir(directory):
       try:
         itempath = os.path.join(directory,item)
-        if os.path.isdir(itempath):
+        if os.path.isdir(itempath) and not os.path.islink(itempath):
           self.trek(itempath)
         else:
           self.logfile(itempath)
