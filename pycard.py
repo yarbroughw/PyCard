@@ -3,7 +3,7 @@
 import os.path as path, os
 import argparse
 import time
-import plotlog
+import plotdata
 
 def _makeparser():
   parser = argparse.ArgumentParser()
@@ -15,7 +15,6 @@ def _makeparser():
 class enterprise:
   """treks through the filesystem, collecting data!"""
   
-  # avgsize, maxsize, minsize, total = 0,0,0,0
   log = {}
   data = { 
             'totalnum':   0, 
@@ -60,7 +59,7 @@ class enterprise:
     return
 
   def printdata(self):
-    
+    """prints results of analyze()"""  
     print "   total file count \t=  {}".format(self.data['totalnum'])
     print "   total size \t\t=  {} bytes ({:.2f} MB)".format(self.data['totalsize'], 
                                                     self.data['totalsize']/float(1048576))
@@ -105,8 +104,8 @@ def main():
   print "traversal from {} shows:".format(root)
   e.printdata()
 
-  print 'generating graphs'
-  plotlog.plot_sizedistr(e.log)
+  print 'generating graph...'
+  plotdata.plot_sizedistr(e.log, args.rootdir)
 
 # standard python boilerplate
 if __name__ == '__main__':
