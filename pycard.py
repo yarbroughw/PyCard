@@ -37,7 +37,7 @@ class enterprise:
     totalsize = 0
     log = self.log
     data = self.data
-    data['minsize'] = data[data.keys()[0]].st_size
+    data['minsize'] = log[log.keys()[0]].st_size
 
     if not log:
       print "log is empty."
@@ -51,9 +51,9 @@ class enterprise:
       if currentdepth > data['maxdepth']: 
         data['maxdepth'] = currentdepth               # update max depth if biggest
       if currentsize > data['maxsize']: 
-        data['maxdepth'] = currentsize                # update max depth if biggest
-      if currentsize < data['mindepth']: 
-        data['mindepth'] = currentsize                # update max depth if biggest
+        data['maxsize'] = currentsize                 # update max depth if biggest
+      if currentsize < data['minsize']: 
+        data['minsize'] = currentsize                 # update max depth if biggest
 
     data['average'] = data['totalsize'] / data['totalnum']
     self.data = data
