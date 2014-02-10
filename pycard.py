@@ -1,42 +1,56 @@
 #!/usr/bin/python
 
-from os import listdir, chdir
-import sys, os.path
+from os import listdir, stat
+import os.path as path
+import argparse
+
+def _makeparser():
+  parser = argparse.ArgumentParser()
+  parser.add_argument("rootdir", help="specify root directory for traversal")
+  return parser
 
 class enterprise:
   """treks through the filesystem, collecting data!"""
   
   avgsize, maxsize, minsize, total = 0,0,0,0
-
-  def __init__(self):
-    return
+  log = {}
 
   def logfile(self,item):
-    # update avg size
-    # check if max?
-    # check if min?
-    self.total += 1
-    print item
-    # check depth? 
+    self.log[item] = stat(item)  # create a log entry about "item"
+    self.total = len(self.log)
+    
+  def analyze(self):
+    totalsize = 0
+    log = self.log
+    if not log:
+      print "log is empty."
+      return False
+    for item in log:
+      totalsize += log[item].st_size
+    return totalsize
 
   def trek(self,directory):
     for item in listdir(directory):
       try:
-        itempath = os.path.join(directory,item)
-        if os.path.isdir(itempath) and not os.path.islink(itempath):
+        itempath = path.join(directory,item)
+        if path.isdir(itempath) and not path.islink(itempath): # dont follow symlinks
           self.trek(itempath)
         else:
           self.logfile(itempath)
       except OSError:
-        print "OSError"
-        pass
+        pass  # skip permissions errors
 
 def main():
-  root = '~'
-  root = os.path.expanduser(root)
+  parser = _makeparser()
+  args = parser.parse_args()
+  root = path.abspath(args.rootdir)
   e = enterprise()
+  print 'traversing file system with {} as root...'.format(root)
   e.trek(root)
+  print 'analyzing results...'
+  totalsize = e.analyze()
   print '{} files, total.'.format(e.total)
+  print 'total size = {} bytes.'.format(totalsize) 
 
 # standard python boilerplate
 if __name__ == '__main__':
