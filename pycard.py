@@ -3,6 +3,7 @@
 import os.path as path, os
 import argparse
 import time
+import plotlog
 
 def _makeparser():
   parser = argparse.ArgumentParser()
@@ -20,7 +21,10 @@ class enterprise:
             'totalnum':   0, 
             'totalsize':  0,
             'maxdepth':   0, 
-            'average':    0
+            'average':    0,
+            'maxsize':    0,
+            'minsize':    0
+            
          }
 
   def logfile(self,item):
@@ -33,17 +37,23 @@ class enterprise:
     totalsize = 0
     log = self.log
     data = self.data
+    data['minsize'] = data[data.keys()[0]].st_size
 
     if not log:
       print "log is empty."
       return
 
     for item in log:
-      data['totalsize'] += log[item].st_size          # update total size count
+      currentsize = log[item].st_size
+      data['totalsize'] += currentsize                # update total size count
 
       currentdepth = item.count(os.sep)               # count '/' chars in filepath to measure depth
       if currentdepth > data['maxdepth']: 
         data['maxdepth'] = currentdepth               # update max depth if biggest
+      if currentsize > data['maxsize']: 
+        data['maxdepth'] = currentsize                # update max depth if biggest
+      if currentsize < data['mindepth']: 
+        data['mindepth'] = currentsize                # update max depth if biggest
 
     data['average'] = data['totalsize'] / data['totalnum']
     self.data = data
@@ -56,6 +66,10 @@ class enterprise:
                                                     self.data['totalsize']/float(1048576))
     print "   average size \t=  {} bytes ({:.2f} MB)".format(self.data['average'], 
                                                     self.data['average']/float(1048576))
+    print "   max file size \t=  {} bytes ({:.2f} MB)".format(self.data['maxsize'], 
+                                                    self.data['maxsize']/float(1048576))
+    print "   min file size \t=  {} bytes ({:.2f} MB)".format(self.data['minsize'], 
+                                                    self.data['minsize']/float(1048576))
     print "   max depth \t\t=  {} directories".format(self.data['maxdepth'])
 
   def trek(self, directory, maxfiles):
@@ -90,6 +104,9 @@ def main():
   e.analyze()
   print "traversal from {} shows:".format(root)
   e.printdata()
+
+  print 'generating graphs'
+  plotlog.plot_sizedistr(e.log)
 
 # standard python boilerplate
 if __name__ == '__main__':
