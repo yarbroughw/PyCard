@@ -4,7 +4,7 @@
 \lstset{
   breaklines=true,
   showstringspaces=false,
-  basicstyle=\scriptsize\ttfamily
+  basicstyle=\footnotesize\ttfamily
 }
 
 \begin{document}
@@ -14,5 +14,107 @@
 
 \section{Code - pycard.py}
 \lstinputlisting[language=Python]{pycard.py}
+
+\newpage
+\section{Output}
+
+\begin{lstlisting}
+> $ python pycard.py ~ 
+traversing file system with /home/y/yarbroughw as root...
+traversing the file system took 8088.558 ms.
+analyzing results...
+traversal from /home/y/yarbroughw shows:
+   total file count 	=  17587
+   total size 		=  1426477174 bytes (1360.39 MB)
+   average size 	=  81109 bytes (0.08 MB)
+   max file size 	=  495516756 bytes (472.56 MB)
+   min file size 	=  0 bytes (0.00 MB)
+   max depth 		=  23 directories
+generating graph...
+
+\end{lstlisting}
+
+\includegraphics[scale=0.7]{assets/pycard-graph-1.png}
+
+\newpage
+
+\begin{lstlisting}
+> $ python pycard.py ~/2013Fall
+traversing file system with /home/y/yarbroughw/2013Fall as root...
+traversing the file system took 29.728 ms.
+analyzing results...
+traversal from /home/y/yarbroughw/2013Fall shows:
+   total file count 	=  49
+   total size 		=  59289584 bytes (56.54 MB)
+   average size 	=  1209991 bytes (1.15 MB)
+   max file size 	=  21298031 bytes (20.31 MB)
+   min file size 	=  590 bytes (0.00 MB)
+   max depth 		=  7 directories
+generating graph...
+\end{lstlisting}
+
+\includegraphics[scale=0.7]{assets/pycard-graph-2.png}
+
+\newpage
+
+\begin{lstlisting}
+> $ python pycard.py ~/Downloads
+traversing file system with /home/y/yarbroughw/Downloads as root...
+traversing the file system took 225.403 ms.
+analyzing results...
+traversal from /home/y/yarbroughw/Downloads shows:
+   total file count 	=  547
+   total size 		=  22507340 bytes (21.46 MB)
+   average size 	=  41146 bytes (0.04 MB)
+   max file size 	=  9961287 bytes (9.50 MB)
+   min file size 	=  8 bytes (0.00 MB)
+   max depth 		=  10 directories
+generating graph...
+\end{lstlisting}
+
+\includegraphics[scale=0.7]{assets/pycard-graph-3.png}
+
+\newpage
+
+\begin{lstlisting}
+> $ python pycard.py ~/Misc/   
+traversing file system with /home/y/yarbroughw/Misc as root...
+traversing the file system took 350.295 ms.
+analyzing results...
+traversal from /home/y/yarbroughw/Misc shows:
+   total file count 	=  521
+   total size 		=  13548668 bytes (12.92 MB)
+   average size 	=  26005 bytes (0.02 MB)
+   max file size 	=  3498423 bytes (3.34 MB)
+   min file size 	=  0 bytes (0.00 MB)
+   max depth 		=  13 directories
+generating graph...
+                         
+\end{lstlisting}
+
+\includegraphics[scale=0.7]{assets/pycard-graph-4.png}
+
+\newpage
+
+\begin{lstlisting}
+> $ python pycard.py ~/2014Spring/cs440/lab2/ 
+traversing file system with /home/y/yarbroughw/2014Spring/cs440/lab2 as root...
+traversing the file system took 75.915 ms.
+analyzing results...
+traversal from /home/y/yarbroughw/2014Spring/cs440/lab2 shows:
+   total file count 	=  76
+   total size 		=  387019 bytes (0.37 MB)
+   average size 	=  5092 bytes (0.00 MB)
+   max file size 	=  114277 bytes (0.11 MB)
+   min file size 	=  15 bytes (0.00 MB)
+   max depth 		=  12 directories
+generating graph...
+\end{lstlisting}
+
+\includegraphics[scale=0.7]{assets/pycard-graph-5.png}
+
+\newpage
+
+\section{Experimental Study}
 
 \end{document}
